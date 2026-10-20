@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanjay Kumar | Frontend Developer & Creative Coder</title>
+  <meta name="description" content="Premium portfolio of Sanjay Kumar — frontend developer from Tamil Nadu building responsive websites, interactive experiences, and clean code.">
+  <meta name="author" content="Sanjay Kumar">
+  <meta property="og:title" content="Sanjay Kumar | Frontend Developer">
+  <meta property="og:description" content="Turning ideas into digital experiences.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#050505">
+
+  <link rel="icon" href="images/monogram.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="theme-dark" data-theme="dark">
+
+  <!-- BACKGROUND ELEMENTS -->
+  <canvas id="matrixCanvas"></canvas>
+  <canvas id="particleCanvas"></canvas>
+  <div class="bg-grid-overlay"></div>
+  <div class="bg-noise"></div>
+  <div class="bg-aurora">
+    <div class="aurora-blob aurora-1"></div>
+    <div class="aurora-blob aurora-2"></div>
+    <div class="aurora-blob aurora-3"></div>
+  </div>
+
+  <!-- UI OVERLAYS -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- THEME DOCK -->
+  <div class="theme-dock" id="themeDock">
+    <button class="theme-swatch active" data-theme="dark" style="--swatch:#050505" title="Dark"></button>
+    <button class="theme-swatch" data-theme="midnight" style="--swatch:#0a0f2c" title="Midnight"></button>
+    <button class="theme-swatch" data-theme="ocean" style="--swatch:#04213a" title="Ocean"></button>
+    <button class="theme-swatch" data-theme="forest" style="--swatch:#052019" title="Forest"></button>
+    <button class="theme-swatch" data-theme="light" style="--swatch:#f5f5f7" title="Light"></button>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container nav-container">
+      <a href="#home" class="logo" id="skLogo" aria-label="Home">
+        <img src="images/monogram.png" alt="SK Monogram" class="header-logo-img">
+        <span class="logo-text">Sanjay<span class="logo-dot">.</span></span>
+      </a>
+
+      <nav class="navbar" id="navbar" aria-label="Primary">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#arcade" class="nav-link">Arcade</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-glass btn-sm desktop-only" id="cmdPaletteBtn" aria-label="Search">
+          <i class='bx bx-search'></i><span>Search</span><kbd class="kbd">Ctrl K</kbd>
+        </button>
+        <a href="Sanjaykumar-Resume%20CV.pdf" class="btn btn-outline btn-sm desktop-only" download>
+          Resume <i class='bx bx-download'></i>
+        </a>
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <i class='bx bx-moon'></i>
+          <i class='bx bx-sun' style="display:none;"></i>
+        </button>
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu">
+          <i class='bx bx-menu'></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero section" id="home">
+      <div class="hero-bg-effects">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+      </div>
+
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="eyebrow-wrap gsap-fade-up">
+            <span class="status-dot"></span>
+            <span class="eyebrow">Available for Freelance</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="gsap-title-line">Turning Ideas Into</span><br>
+            <span class="highlight gsap-title-line">Digital Experiences.</span>
+          </h1>
+
+          <div class="role-rotator gsap-fade-up">
+            <span class="role-label">I'm a</span>
+            <div class="role-words">
+              <span class="role-text active">Frontend Developer</span>
+              <span class="role-text">Web Developer</span>
+              <span class="role-text">Creative Coder</span>
+              <span class="role-text">UI-Focused Builder</span>
+              <span class="role-text">Problem Solver</span>
+            </div>
+          </div>
+
+          <p class="hero-desc gsap-fade-up">
+            I'm Sanjay Kumar from Tamil Nadu — a passionate web developer focused on building responsive websites and interactive digital experiences that blend clean code with thoughtful design.
+          </p>
+
+          <div class="hero-cta gsap-fade-up">
+            <a href="#projects" class="btn btn-primary btn-lg">
+              Explore My Work <i class='bx bx-right-arrow-alt'></i>
+            </a>
+            <button class="btn btn-glass btn-lg" id="openTerminalBtn">
+              Open Terminal <i class='bx bx-terminal'></i>
+            </button>
+          </div>
+
+          <div class="hero-footer-row gsap-fade-up">
+            <div class="hero-socials">
+              <a href="https://github.com/Sanjaykumar-tech" target="_blank" rel="noopener" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+              <a href="https://www.linkedin.com/in/sanjay-kumar-7a8731324/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+              <a href="https://www.instagram.com/sanjaykumar.tech/" target="_blank" rel="noopener" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+              <a href="https://x.com/sanjaykumar_x" target="_blank" rel="noopener" aria-label="Twitter"><i class='bx bxl-twitter'></i></a>
+            </div>
+            <div class="hero-stats">
+              <div class="stat"><strong data-count="3">3+</strong><span>Years Learning</span></div>
+              <div class="stat-divider"></div>
+              <div class="stat"><strong data-count="10">10+</strong><span>Projects Built</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual gsap-scale-in">
+          <div class="hero-image-wrap">
+            <div class="img-ring img-ring-1"></div>
+            <div class="img-ring img-ring-2"></div>
+            <div class="img-glow"></div>
+            <img src="images/profile-0.png" alt="Sanjay Kumar portrait" class="hero-img">
+            <div class="img-badge img-badge-top float-animation">
+              <i class='bx bx-code-alt'></i><span>Frontend Dev</span>
+            </div>
+            <div class="img-badge img-badge-bottom float-animation-2">
+              <span class="status-dot"></span><span>Open to Work</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-scroll-cue">
+        <span>Scroll</span>
+        <i class='bx bx-down-arrow-alt'></i>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <section class="marquee-section" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-content">
+          <span>DESIGN</span><span class="dot">✦</span>
+          <span>DEVELOP</span><span class="dot">✦</span>
+          <span>DELIVER</span><span class="dot">✦</span>
+          <span>DESIGN</span><span class="dot">✦</span>
+          <span>DEVELOP</span><span class="dot">✦</span>
+          <span>DELIVER</span><span class="dot">✦</span>
+        </div>
+        <div class="marquee-content" aria-hidden="true">
+          <span>DESIGN</span><span class="dot">✦</span>
+          <span>DEVELOP</span><span class="dot">✦</span>
+          <span>DELIVER</span><span class="dot">✦</span>
+          <span>DESIGN</span><span class="dot">✦</span>
+          <span>DEVELOP</span><span class="dot">✦</span>
+          <span>DELIVER</span><span class="dot">✦</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="trust-section">
+      <div class="container">
+        <div class="trust-grid">
+          <div class="trust-card gsap-scroll-up">
+            <div class="trust-icon"><i class='bx bx-code-alt'></i></div>
+            <div class="trust-text"><h4>Clean Code</h4><p>Maintainable & scalable.</p></div>
+          </div>
+          <div class="trust-card gsap-scroll-up">
+            <div class="trust-icon"><i class='bx bx-devices'></i></div>
+            <div class="trust-text"><h4>Responsive</h4><p>Perfect on all devices.</p></div>
+          </div>
+          <div class="trust-card gsap-scroll-up">
+            <div class="trust-icon"><i class='bx bx-rocket'></i></div>
+            <div class="trust-text"><h4>Fast</h4><p>Optimized performance.</p></div>
+          </div>
+          <div class="trust-card gsap-scroll-up">
+            <div class="trust-icon"><i class='bx bx-bulb'></i></div>
+            <div class="trust-text"><h4>Creative</h4><p>Ideas into products.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head gsap-scroll-up">
+          <span class="section-tag">ABOUT ME</span>
+          <h2 class="section-title">A Frontend Developer<br>With A <span class="highlight">Creative Mindset.</span></h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="grid-card about-card gsap-scroll-left">
+            <div class="about-text-content">
+              <p class="lead-text">I'm Sanjay Kumar, a B.Sc. Computer Science graduate from Thiru Kolanjiappar Arts and Science College. I love creating modern, responsive, and user-friendly websites.</p>
+              <p>My background instilled a strong work ethic, which I now apply to writing clean, maintainable code. I'm deeply interested in AI applications and entrepreneurship — always exploring how technology can solve real-world problems.</p>
+              
+              <div class="about-features-grid">
+                <div class="about-feature"><i class='bx bx-layout'></i><span>Clean Design</span></div>
+                <div class="about-feature"><i class='bx bx-mobile-alt'></i><span>Responsive Dev</span></div>
+                <div class="about-feature"><i class='bx bx-tachometer'></i><span>Performance Focused</span></div>
+                <div class="about-feature"><i class='bx bx-book-reader'></i><span>Continuous Learning</span></div>
+              </div>
+            </div>
+            <div class="about-image-box">
+              <img src="images/profile-3.png" alt="Sanjay Kumar About">
+            </div>
+          </div>
+
+          <div class="grid-card about-info-card gsap-scroll-right">
+            <div class="info-row"><span>Name</span><strong>Sanjay Kumar</strong></div>
+            <div class="info-row"><span>Location</span><strong>Tamil Nadu, India</strong></div>
+            <div class="info-row"><span>Focus</span><strong>Frontend & UI</strong></div>
+            <div class="info-row"><span>Status</span><strong class="text-green">Open to Work</strong></div>
+            <div class="info-row"><span>Email</span><strong>sanjaykumar.techdev@gmail.com</strong></div>
+            <div class="about-quote">
+              <i class='bx bxs-quote-left'></i>
+              <p>Design. Develop. Deliver.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section skills-section" id="skills">
+      <div class="container">
+        <div class="section-head gsap-scroll-up">
+          <span class="section-tag">SKILLS</span>
+          <h2 class="section-title">Tools & Technologies<br>I <span class="highlight">Work With.</span></h2>
+        </div>
+
+        <div class="skills-icon-grid">
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-html5' style="color:#e34f26"></i><span>HTML5</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-css3' style="color:#1572b6"></i><span>CSS3</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-javascript' style="color:#f7df1e"></i><span>JavaScript</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-react' style="color:#61dafb"></i><span>React</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-tailwind-css' style="color:#38bdf8"></i><span>Tailwind</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-nodejs' style="color:#68a063"></i><span>Node.js</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bx-data' style="color:#4db33d"></i><span>MongoDB</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-git' style="color:#f34f29"></i><span>Git</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-github' style="color:#ffffff"></i><span>GitHub</span></div>
+          <div class="skill-icon-box gsap-scroll-up"><i class='bx bxl-figma' style="color:#f24e1e"></i><span>Figma</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section projects-section" id="projects">
+      <div class="container">
+        <div class="projects-header-row gsap-scroll-up">
+          <div class="section-head">
+            <span class="section-tag">PROJECTS</span>
+            <h2 class="section-title">Real Projects.<br>Real <span class="highlight">Learning.</span></h2>
+          </div>
+          <a href="https://github.com/Sanjaykumar-tech" target="_blank" class="btn btn-outline btn-sm">
+            View All on GitHub <i class='bx bxl-github'></i>
+          </a>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
+            <div class="project-image-wrapper">
+              <div class="project-mockup" style="background: linear-gradient(135deg, #10b981, #047857);">
+                <div class="mockup-nav"></div>
+                <div class="mockup-content"><i class='bx bx-leaf'></i></div>
+              </div>
+              <span class="project-tag">Completed</span>
+              <a href="#" class="project-link-icon" aria-label="View project"><i class='bx bx-link-external'></i></a>
+            </div>
+            <div class="project-content">
+              <h3>LifeKit.ai</h3>
+              <p>An AI-powered utility platform designed to streamline daily tasks using smart automation.</p>
+              <div class="project-tech"><span>React</span><span>AI</span><span>Tailwind</span></div>
+            </div>
+          </article>
+
+          <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
+            <div class="project-image-wrapper">
+              <div class="project-mockup mockup-purple">
+                <div class="mockup-nav"></div>
+                <div class="mockup-content"><i class='bx bx-bot'></i></div>
+              </div>
+              <span class="project-tag tag-progress">In Progress</span>
+              <a href="https://aura-ai-frontend-two.vercel.app/" target="_blank" class="project-link-icon" aria-label="View project"><i class='bx bx-link-external'></i></a>
+            </div>
+            <div class="project-content">
+              <h3>AURA AI</h3>
+              <p>An advanced AI assistant with text, voice, and Android app integration using modern AI APIs.</p>
+              <div class="project-tech"><span>React</span><span>Node.js</span><span>AI APIs</span></div>
+            </div>
+          </article>
+
+          <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
+            <div class="project-image-wrapper">
+              <div class="project-mockup mockup-dark">
+                <div class="mockup-nav"></div>
+                <div class="mockup-content"><i class='bx bx-laptop'></i></div>
+              </div>
+              <span class="project-tag">Completed</span>
+              <a href="https://sanjaykumar-tech.github.io/portfolio_frontend/" target="_blank" class="project-link-icon" aria-label="View project"><i class='bx bx-link-external'></i></a>
+            </div>
+            <div class="project-content">
+              <h3>Premium Portfolio</h3>
+              <p>A fully responsive, premium portfolio website built from scratch to showcase my skills.</p>
+              <div class="project-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            </div>
+          </article>
+
+          <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
+            <div class="project-image-wrapper">
+              <div class="project-mockup mockup-blue">
+                <div class="mockup-nav"></div>
+                <div class="mockup-content"><i class='bx bx-task'></i></div>
+              </div>
+              <span class="project-tag">Completed</span>
+              <a href="https://sanjaykumar-tech.github.io/sanjay-s-todo-app/" target="_blank" class="project-link-icon" aria-label="View project"><i class='bx bx-link-external'></i></a>
+            </div>
+            <div class="project-content">
+              <h3>Task Manager App</h3>
+              <p>A clean task management application featuring local storage, dark mode, and task filtering.</p>
+              <div class="project-tech"><span>JavaScript</span><span>LocalStorage</span><span>CSS</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section journey-section" id="experience">
+      <div class="container">
+        <div class="section-head gsap-scroll-up">
+          <span class="section-tag">EXPERIENCE & LEARNING</span>
+          <h2 class="section-title">My Development <span class="highlight">Journey</span></h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item gsap-scroll-left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">Mar 2025</div>
+            <div class="timeline-content">
+              <h3>Full-Stack Web Development Internship</h3>
+              <p>Unified Mentor Pvt Ltd. Successfully completed 1-month intensive internship.</p>
+            </div>
+          </div>
+          <div class="timeline-item gsap-scroll-left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2024</div>
+            <div class="timeline-content">
+              <h3>IT Accelarate Program</h3>
+              <p>Chanakya IT Academy. 45-day intensive full-stack web development training.</p>
+            </div>
+          </div>
+          <div class="timeline-item gsap-scroll-left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2024</div>
+            <div class="timeline-content">
+              <h3>Web Development Certification</h3>
+              <p>Udemy. HTML5, CSS3, JavaScript fundamentals, Responsive design principles.</p>
+            </div>
+          </div>
+          <div class="timeline-item gsap-scroll-left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">2019 – 2022</div>
+            <div class="timeline-content">
+              <h3>B.Sc. Computer Science</h3>
+              <p>Thiru Kolanjiappar Arts and Science College, Virudhachalam.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCADE SECTION -->
+    <section class="section arcade-section" id="arcade">
+      <div class="container">
+        <div class="section-head gsap-scroll-up">
+          <span class="section-tag">SK ARCADE</span>
+          <h2 class="section-title">Play. Think. <span class="highlight">Challenge.</span></h2>
+          <p class="section-subtitle">15 brain-bending mini games built with vanilla JavaScript. No frameworks. Just pure logic.</p>
+        </div>
+
+        <div class="arcade-hub">
+          <div class="game-launcher" data-game="snake">
+            <div class="game-icon"><i class='bx bx-game'></i></div>
+            <h3>Snake</h3><p>Classic snake game</p>
+            <span class="game-diff diff-easy">Easy</span>
+          </div>
+          <div class="game-launcher" data-game="memory">
+            <div class="game-icon"><i class='bx bx-grid-alt'></i></div>
+            <h3>Memory Match</h3><p>Match the pairs</p>
+            <span class="game-diff diff-easy">Easy</span>
+          </div>
+          <div class="game-launcher" data-game="tictactoe">
+            <div class="game-icon"><i class='bx bx-hash'></i></div>
+            <h3>Tic Tac Toe</h3><p>Vs AI or 2-player</p>
+            <span class="game-diff diff-easy">Easy</span>
+          </div>
+          <div class="game-launcher" data-game="2048">
+            <div class="game-icon"><i class='bx bx-cube'></i></div>
+            <h3>2048</h3><p>Merge the numbers</p>
+            <span class="game-diff diff-medium">Medium</span>
+          </div>
+          <div class="game-launcher" data-game="simon">
+            <div class="game-icon"><i class='bx bx-palette'></i></div>
+            <h3>Simon Says</h3><p>Repeat the sequence</p>
+            <span class="game-diff diff-medium">Medium</span>
+          </div>
+          <div class="game-launcher" data-game="scramble">
+            <div class="game-icon"><i class='bx bx-text'></i></div>
+            <h3>Word Scramble</h3><p>Unscramble the word</p>
+            <span class="game-diff diff-medium">Medium</span>
+          </div>
+          <div class="game-launcher" data-game="math">
+            <div class="game-icon"><i class='bx bx-calculator'></i></div>
+            <h3>Math Blitz</h3><p>Solve against timer</p>
+            <span class="game-diff diff-medium">Medium</span>
+          </div>
+          <div class="game-launcher" data-game="cards">
+            <div class="game-icon"><i class='bx bx-layer'></i></div>
+            <h3>Card Sequence</h3><p>Remember the order</p>
+            <span class="game-diff diff-medium">Medium</span>
+          </div>
+          <div class="game-launcher" data-game="reaction">
+            <div class="game-icon"><i class='bx bx-time-five'></i></div>
+            <h3>Reaction Test</h3><p>How fast are you?</p>
+            <span class="game-diff diff-easy">Easy</span>
+          </div>
+          <div class="game-launcher" data-game="cipher">
+            <div class="game-icon"><i class='bx bx-lock-alt'></i></div>
+            <h3>Cipher Breaker</h3><p>Crack the code</p>
+            <span class="game-diff diff-hard">Hard</span>
+          </div>
+          <div class="game-launcher" data-game="color">
+            <div class="game-icon"><i class='bx bx-color'></i></div>
+            <h3>Color Match</h3><p>Find odd shade</p>
+            <span class="game-diff diff-medium">Medium</span>
+          </div>
+          <div class="game-launcher" data-game="typing">
+            <div class="game-icon"><i class='bx bx-keyboard'></i></div>
+            <h3>Typing Rush</h3><p>Speed typing test</p>
+            <span class="game-diff diff-medium">Medium</span>
+          </div>
+          <div class="game-launcher" data-game="sequence">
+            <div class="game-icon"><i class='bx bx-sort-alt-2'></i></div>
+            <h3>Sequence Finder</h3><p>Next number?</p>
+            <span class="game-diff diff-hard">Hard</span>
+          </div>
+          <div class="game-launcher" data-game="rhythm">
+            <div class="game-icon"><i class='bx bx-music'></i></div>
+            <h3>Rhythm Tap</h3><p>Tap to the beat</p>
+            <span class="game-diff diff-hard">Hard</span>
+          </div>
+          <div class="game-launcher" data-game="lights">
+            <div class="game-icon"><i class='bx bx-bulb'></i></div>
+            <h3>Lights Off</h3><p>Turn all lights off</p>
+            <span class="game-diff diff-hard">Hard</span>
+          </div>
+        </div>
+
+        <div class="arcade-stats-row gsap-scroll-up">
+          <div class="arcade-stat"><i class='bx bx-trophy'></i><strong>15</strong><span>Games</span></div>
+          <div class="arcade-stat"><i class='bx bx-brain'></i><strong>100%</strong><span>Vanilla JS</span></div>
+          <div class="arcade-stat"><i class='bx bx-devices'></i><strong>Responsive</strong><span>Mobile Ready</span></div>
+          <div class="arcade-stat"><i class='bx bx-rocket'></i><strong>0</strong><span>Dependencies</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="section-head gsap-scroll-up">
+          <span class="section-tag">CONTACT</span>
+          <h2 class="section-title">Let's Create Something<br><span class="highlight">Amazing Together.</span></h2>
+        </div>
+
+        <div class="contact-grid">
+          <div class="grid-card contact-card gsap-scroll-left">
+            <p class="lead-text">Have a project in mind or just want to connect? I'm always open to new opportunities and interesting ideas.</p>
+
+            <form class="contact-form" id="contactForm" action="thank-you.html" method="POST" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Your Name</label>
+                  <input type="text" id="name" name="name" placeholder="John Doe" required autocomplete="name">
+                  <span class="error-text"></span>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+                  <span class="error-text"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="Project inquiry" required>
+                <span class="error-text"></span>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+                <span class="error-text"></span>
+              </div>
+              <div class="quick-contact-actions">
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                  Send Message <i class='bx bx-send'></i>
+                </button>
+                <a href="mailto:sanjaykumar.techdev@gmail.com" class="btn btn-glass">
+                  Email Directly <i class='bx bx-envelope'></i>
+                </a>
+              </div>
+            </form>
+
+            <div class="quick-socials">
+              <a href="mailto:sanjaykumar.techdev@gmail.com" aria-label="Email"><i class='bx bx-envelope'></i></a>
+              <a href="https://www.linkedin.com/in/sanjay-kumar-7a8731324/" target="_blank" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+              <a href="https://github.com/Sanjaykumar-tech" target="_blank" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+              <a href="https://x.com/sanjaykumar_x" target="_blank" aria-label="Twitter"><i class='bx bxl-twitter'></i></a>
+            </div>
+          </div>
+
+          <div class="grid-card design-system-card gsap-scroll-right">
+            <span class="section-tag">DESIGN SYSTEM</span>
+            <div class="color-palette">
+              <div class="color-swatch"><div class="swatch-circle bg-base"></div><span>Base<br>#050505</span></div>
+              <div class="color-swatch"><div class="swatch-circle bg-surface"></div><span>Surface<br>#0F1F18</span></div>
+              <div class="color-swatch"><div class="swatch-circle bg-accent"></div><span>Green<br>#00B050</span></div>
+              <div class="color-swatch"><div class="swatch-circle bg-light-green"></div><span>Bright<br>#00FF88</span></div>
+            </div>
+            <div class="typography-showcase">
+              <div class="typo-item"><h3>Ag</h3><span>Space Grotesk<br>Headings</span></div>
+              <div class="typo-item"><h3 style="font-family:'Inter',sans-serif;">Ag</h3><span>Inter<br>Body</span></div>
+              <div class="typo-item"><h3 style="font-family:'JetBrains Mono',monospace;">Ag</h3><span>JetBrains<br>Mono</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer gsap-scroll-up">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="#home" class="logo" aria-label="Home">
+          <img src="images/logo0.png" alt="Sanjay Kumar Logo" class="footer-logo-img">
+        </a>
+      </div>
+      <p class="footer-text">Design. Develop. Deliver.</p>
+      <p class="footer-copy">&copy; <span id="year"></span> Sanjay Kumar. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- GAME MODAL -->
+  <div class="modal-overlay game-modal-overlay" id="gameModal">
+    <div class="modal-content game-modal">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+        </div>
+        <span class="terminal-title" id="gameModalTitle">SK Game</span>
+        <button class="close-modal" id="closeGameModal" aria-label="Close"><i class='bx bx-x'></i></button>
+      </div>
+      <div class="game-modal-body" id="gameModalBody"></div>
+    </div>
+  </div>
+
+  <!-- TERMINAL -->
+  <div class="modal-overlay" id="terminalModal">
+    <div class="modal-content terminal-window">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+        </div>
+        <span class="terminal-title">SK Terminal v1.0.0</span>
+        <button class="close-modal" id="closeTerminal" aria-label="Close"><i class='bx bx-x'></i></button>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <p>Welcome to SK Terminal. Type <span class="t-green">'help'</span> to see available commands.</p>
+      </div>
+      <div class="terminal-input-wrapper">
+        <span class="prompt">guest@sk:~$</span>
+        <input type="text" id="terminalInput" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+  </div>
+
+  <!-- CMD PALETTE -->
+  <div class="cmd-palette-overlay" id="cmdPalette">
+    <div class="cmd-palette">
+      <div class="cmd-search">
+        <i class='bx bx-search'></i>
+        <input type="text" id="cmdInput" placeholder="Search sections, games, actions..." autocomplete="off">
+        <kbd class="kbd">Esc</kbd>
+      </div>
+      <ul class="cmd-results" id="cmdResults"></ul>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/script.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/contact-form.js"></script>
+</body>
+</html>
