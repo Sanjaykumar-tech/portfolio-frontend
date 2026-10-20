@@ -20,7 +20,6 @@
 
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
@@ -28,7 +27,6 @@
 </head>
 <body class="theme-dark" data-theme="dark">
 
-  <!-- BACKGROUND ELEMENTS -->
   <canvas id="matrixCanvas"></canvas>
   <canvas id="particleCanvas"></canvas>
   <div class="bg-grid-overlay"></div>
@@ -39,11 +37,10 @@
     <div class="aurora-blob aurora-3"></div>
   </div>
 
-  <!-- UI OVERLAYS -->
   <div class="scroll-progress" id="scrollProgress"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
 
-  <!-- THEME DOCK -->
+  <!-- Theme Dock -->
   <div class="theme-dock" id="themeDock">
     <button class="theme-swatch active" data-theme="dark" style="--swatch:#050505" title="Dark"></button>
     <button class="theme-swatch" data-theme="midnight" style="--swatch:#0a0f2c" title="Midnight"></button>
@@ -68,12 +65,21 @@
         <a href="#experience" class="nav-link">Experience</a>
         <a href="#arcade" class="nav-link">Arcade</a>
         <a href="#contact" class="nav-link">Contact</a>
+        
+        <!-- Mobile Login Link (Now visible on mobile) -->
+        <a href="login.html" class="nav-link">Login / Sign Up</a>
       </nav>
 
       <div class="nav-actions">
         <button class="btn btn-glass btn-sm desktop-only" id="cmdPaletteBtn" aria-label="Search">
           <i class='bx bx-search'></i><span>Search</span><kbd class="kbd">Ctrl K</kbd>
         </button>
+        
+        <!-- Desktop Login Button -->
+        <a href="login.html" class="btn btn-primary btn-sm desktop-only" style="box-shadow: none; background: transparent; border: 1px solid var(--border-color); color: var(--text-main);">
+          Login <i class='bx bx-log-in'></i>
+        </a>
+
         <a href="Sanjaykumar-Resume%20CV.pdf" class="btn btn-outline btn-sm desktop-only" download>
           Resume <i class='bx bx-download'></i>
         </a>
@@ -279,7 +285,7 @@
       </div>
     </section>
 
-        <!-- PROJECTS -->
+    <!-- PROJECTS -->
     <section class="section projects-section" id="projects">
       <div class="container">
         <div class="projects-header-row gsap-scroll-up">
@@ -287,14 +293,12 @@
             <span class="section-tag">PROJECTS</span>
             <h2 class="section-title">Real Projects.<br>Real <span class="highlight">Learning.</span></h2>
           </div>
-          <!-- Direct link to your repositories tab -->
           <a href="https://github.com/Sanjaykumar-tech?tab=repositories" target="_blank" class="btn btn-outline btn-sm">
             View All on GitHub <i class='bx bxl-github'></i>
           </a>
         </div>
 
         <div class="projects-grid">
-          <!-- LIFEYKIT -->
           <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
             <div class="project-image-wrapper">
               <div class="project-mockup" style="background: linear-gradient(135deg, #10b981, #047857);">
@@ -311,7 +315,6 @@
             </div>
           </article>
 
-          <!-- AURA AI -->
           <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
             <div class="project-image-wrapper">
               <div class="project-mockup mockup-purple">
@@ -328,7 +331,6 @@
             </div>
           </article>
 
-          <!-- PREMIUM PORTFOLIO -->
           <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
             <div class="project-image-wrapper">
               <div class="project-mockup mockup-dark">
@@ -345,7 +347,6 @@
             </div>
           </article>
 
-          <!-- NP FITNESS -->
           <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
             <div class="project-image-wrapper">
               <div class="project-mockup mockup-blue">
@@ -359,40 +360,6 @@
               <h3>NP Fitness App</h3>
               <p>A modern fitness application to track workouts, diet, and daily progress with a clean UI.</p>
               <div class="project-tech"><span>React</span><span>Vercel</span><span>UI/UX</span></div>
-            </div>
-          </article>
-
-          <!-- TODO APP (GitHub) -->
-          <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
-            <div class="project-image-wrapper">
-              <div class="project-mockup" style="background: linear-gradient(135deg, #0369a1, #082f49);">
-                <div class="mockup-nav"></div>
-                <div class="mockup-content"><i class='bx bx-task'></i></div>
-              </div>
-              <span class="project-tag" style="background: #6b7280; color: #fff;">GitHub</span>
-              <a href="https://sanjaykumar-tech.github.io/sanjay-s-todo-app/" target="_blank" class="project-link-icon" aria-label="View project"><i class='bx bx-link-external'></i></a>
-            </div>
-            <div class="project-content">
-              <h3>Task Manager App</h3>
-              <p>A clean task management application featuring local storage, dark mode, and task filtering.</p>
-              <div class="project-tech"><span>JavaScript</span><span>LocalStorage</span><span>CSS</span></div>
-            </div>
-          </article>
-          
-          <!-- NEW PROJECT 1 (Placeholder for your other GitHub repos) -->
-          <article class="project-card gsap-project-card" data-tilt data-tilt-max="6" data-tilt-glare="true" data-tilt-max-glare="0.15">
-            <div class="project-image-wrapper">
-              <div class="project-mockup" style="background: linear-gradient(135deg, #4c1d95, #2e1065);">
-                <div class="mockup-nav"></div>
-                <div class="mockup-content"><i class='bx bx-code-block'></i></div>
-              </div>
-              <span class="project-tag" style="background: #6b7280; color: #fff;">GitHub</span>
-              <a href="https://github.com/Sanjaykumar-tech?tab=repositories" target="_blank" class="project-link-icon" aria-label="View repo"><i class='bx bxl-github'></i></a>
-            </div>
-            <div class="project-content">
-              <h3>And Many More...</h3>
-              <p>Explore all my other repositories, experiments, and open-source contributions on my GitHub profile.</p>
-              <div class="project-tech"><span>Explore</span><span>GitHub</span></div>
             </div>
           </article>
         </div>
@@ -552,7 +519,7 @@
           <div class="grid-card contact-card gsap-scroll-left">
             <p class="lead-text">Have a project in mind or just want to connect? I'm always open to new opportunities and interesting ideas.</p>
 
-            <form class="contact-form" id="contactForm" action="thank-you.html" method="POST" novalidate>
+            <form class="contact-form" id="contactForm" action="thank-you.html" method="GET" novalidate>
               <div class="form-row">
                 <div class="form-group">
                   <label for="name">Your Name</label>
