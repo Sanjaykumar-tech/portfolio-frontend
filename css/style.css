@@ -1334,6 +1334,18 @@ body[data-theme="light"] .footer-logo-img { mix-blend-mode: multiply; }
     color: var(--accent-light) !important;
     font-weight: 600;
   }
+
+  /* Page Loader Bar Animation */
+body.loading .scroll-progress {
+  width: 60% !important;
+  transition: width 0.6s ease;
+  opacity: 1;
+}
+body.loaded .scroll-progress {
+  width: 100% !important;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.4s ease 0.3s;
+}
   
   .hero-title { font-size: 2.6rem; }
   .hero-image-wrap { max-width: 320px; }

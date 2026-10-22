@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cursorGlow.style.display = 'none';
   }
 
-  /* 4. THEME SYSTEM */
+    /* 4. THEME SYSTEM (Auto System Theme + Manual Override) */
   const themeToggle = document.getElementById('themeToggle');
   const swatches = document.querySelectorAll('.theme-swatch');
   const themes = ['dark', 'midnight', 'ocean', 'forest', 'light'];
@@ -68,7 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  applyTheme(localStorage.getItem('theme') || 'dark');
+  // Check saved theme
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    applyTheme(savedTheme);
+  } else {
+    // System theme check
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'dark' : 'light');
+  }
+
   swatches.forEach(s => s.addEventListener('click', () => applyTheme(s.dataset.theme)));
 
   if (themeToggle) {
@@ -404,5 +413,13 @@ document.addEventListener('DOMContentLoaded', () => {
       max: 6, speed: 400, glare: true, 'max-glare': 0.15
     });
   }
+
+    // Page Load Animation
+  document.body.classList.add('loading');
+  window.addEventListener('load', () => {
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+    setTimeout(() => { document.body.classList.remove('loaded'); }, 1000);
+  });
 
 });
