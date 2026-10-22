@@ -1,5 +1,5 @@
 /* =========================================
-   PREMIUM PORTFOLIO — MAIN SCRIPT
+   PREMIUM PORTFOLIO — MAIN SCRIPT (OPTIMIZED)
    ========================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,49 +8,50 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* 2. GSAP ANIMATIONS */
+  /* 2. GSAP ANIMATIONS (Faster & Optimized) */
   if (typeof gsap !== 'undefined') {
     if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
-    const tl = gsap.timeline({ delay: 0.2 });
-    tl.from(".gsap-fade-down", { y: -40, opacity: 0, duration: 0.8, stagger: 0.08, ease: "power3.out" });
-    tl.from(".gsap-title-line", { y: 100, opacity: 0, duration: 1, stagger: 0.15, ease: "power4.out" }, "-=0.5");
-    tl.from(".gsap-fade-up", { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.5");
-    tl.from(".gsap-scale-in", { scale: 0.9, opacity: 0, duration: 1.1, ease: "power3.out" }, "-=0.9");
+    const tl = gsap.timeline({ delay: 0.1 });
+    tl.from(".gsap-fade-down", { y: -20, opacity: 0, duration: 0.6, stagger: 0.05, ease: "power2.out" });
+    tl.from(".gsap-title-line", { y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.4");
+    tl.from(".gsap-fade-up", { y: 20, opacity: 0, duration: 0.6, stagger: 0.05, ease: "power2.out" }, "-=0.4");
+    tl.from(".gsap-scale-in", { scale: 0.95, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.6");
 
     gsap.utils.toArray('.gsap-scroll-up').forEach(el => {
-      gsap.from(el, { y: 50, opacity: 0, duration: 0.9, ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 88%" } });
+      gsap.from(el, { y: 30, opacity: 0, duration: 0.6, ease: "power2.out",
+        scrollTrigger: { trigger: el, start: "top 90%" } });
     });
     gsap.utils.toArray('.gsap-scroll-left').forEach(el => {
-      gsap.from(el, { x: -50, opacity: 0, duration: 0.9, ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 88%" } });
+      gsap.from(el, { x: -30, opacity: 0, duration: 0.6, ease: "power2.out",
+        scrollTrigger: { trigger: el, start: "top 90%" } });
     });
     gsap.utils.toArray('.gsap-scroll-right').forEach(el => {
-      gsap.from(el, { x: 50, opacity: 0, duration: 0.9, ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 88%" } });
+      gsap.from(el, { x: 30, opacity: 0, duration: 0.6, ease: "power2.out",
+        scrollTrigger: { trigger: el, start: "top 90%" } });
     });
     gsap.utils.toArray('.gsap-project-card').forEach((card, i) => {
-      gsap.from(card, { y: 60, opacity: 0, duration: 0.8, delay: i * 0.1, ease: "power3.out",
-        scrollTrigger: { trigger: card, start: "top 88%" } });
+      gsap.from(card, { y: 40, opacity: 0, duration: 0.6, delay: i * 0.05, ease: "power2.out",
+        scrollTrigger: { trigger: card, start: "top 90%" } });
     });
   }
 
-  /* 3. CURSOR GLOW */
+  /* 3. CURSOR GLOW (Disabled on Mobile) */
   const cursorGlow = document.getElementById('cursorGlow');
-  if (window.innerWidth > 768 && window.matchMedia('(hover: hover)').matches) {
+  if (window.innerWidth > 1024 && window.matchMedia('(hover: hover)').matches) {
     let mx = 0, my = 0, gx = 0, gy = 0;
     document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
     (function anim() {
-      gx += (mx - gx) * 0.08;
-      gy += (my - gy) * 0.08;
+      gx += (mx - gx) * 0.1;
+      gy += (my - gy) * 0.1;
       if (cursorGlow) { cursorGlow.style.left = gx + 'px'; cursorGlow.style.top = gy + 'px'; }
       requestAnimationFrame(anim);
     })();
-  } else if (cursorGlow) cursorGlow.style.display = 'none';
+  } else if (cursorGlow) {
+    cursorGlow.style.display = 'none';
+  }
 
   /* 4. THEME SYSTEM */
-  const themeDock = document.getElementById('themeDock');
   const themeToggle = document.getElementById('themeToggle');
   const swatches = document.querySelectorAll('.theme-swatch');
   const themes = ['dark', 'midnight', 'ocean', 'forest', 'light'];
@@ -67,19 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  applyTheme(savedTheme);
-
-  swatches.forEach(s => {
-    s.addEventListener('click', () => applyTheme(s.dataset.theme));
-  });
+  applyTheme(localStorage.getItem('theme') || 'dark');
+  swatches.forEach(s => s.addEventListener('click', () => applyTheme(s.dataset.theme)));
 
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       const cur = document.body.getAttribute('data-theme');
       const idx = themes.indexOf(cur);
-      const next = themes[(idx + 1) % themes.length];
-      applyTheme(next);
+      applyTheme(themes[(idx + 1) % themes.length]);
     });
   }
 
@@ -112,15 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
     }
-    const sections = document.querySelectorAll('section[id]');
-    const scrollPos = window.scrollY + 150;
-    sections.forEach(section => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      const id = section.getAttribute('id');
-      const link = document.querySelector(`.nav-link[href="#${id}"]`);
-      if (link) link.classList.toggle('active', scrollPos >= top && scrollPos < top + height);
-    });
   };
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
@@ -158,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = entry.target;
         const target = parseInt(el.dataset.count);
         let cur = 0;
-        const step = Math.ceil(target / 40);
+        const step = Math.ceil(target / 30);
         const t = setInterval(() => {
           cur += step;
           if (cur >= target) { cur = target; clearInterval(t); }
@@ -245,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (logoClicks >= 5) {
         e.preventDefault();
         logoClicks = 0;
-        if (typeof confetti === 'function') confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 } });
+        if (typeof confetti === 'function') confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       }
       clearTimeout(skLogo._t);
       skLogo._t = setTimeout(() => { logoClicks = 0; }, 3000);
@@ -288,14 +275,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* 13. PARTICLE BACKGROUND */
+  /* 13. PARTICLE BACKGROUND (Optimized) */
   const pCanvas = document.getElementById('particleCanvas');
   const pCtx = pCanvas ? pCanvas.getContext('2d') : null;
-  if (pCanvas && pCtx) {
+  
+  // ONLY RUN ON DESKTOP
+  if (pCanvas && pCtx && window.innerWidth > 1024) {
     pCanvas.width = window.innerWidth;
     pCanvas.height = window.innerHeight;
     const particles = [];
-    const NUM = 60;
+    const NUM = 35; // Reduced from 60
     for (let i = 0; i < NUM; i++) {
       particles.push({
         x: Math.random() * pCanvas.width,
@@ -339,6 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
       pCanvas.width = window.innerWidth;
       pCanvas.height = window.innerHeight;
     });
+  } else if (pCanvas) {
+    pCanvas.style.display = 'none'; // Hide on mobile
   }
 
   /* 14. CMD PALETTE */
@@ -408,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* 15. VANILLA TILT */
-  if (typeof VanillaTilt !== 'undefined') {
+  if (typeof VanillaTilt !== 'undefined' && window.innerWidth > 1024) {
     VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {
       max: 6, speed: 400, glare: true, 'max-glare': 0.15
     });
