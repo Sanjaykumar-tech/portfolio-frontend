@@ -1,6 +1,48 @@
 /* =========================================
-   SK ARCADE — 15 GAMES (VANILLA JS)
+   SK ARCADE — 15 GAMES (VANILLA JS + SOUND)
    ========================================= */
+
+// ⚡ SOUND ENGINE (Web Audio API)
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+document.addEventListener('click', () => {
+  if (!audioCtx) audioCtx = new AudioContext();
+}, { once: true });
+
+function playSound(type) {
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  osc.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  const now = audioCtx.currentTime;
+
+  if (type === 'eat' || type === 'success') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, now);
+    osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+    gainNode.gain.setValueAtTime(0.1, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+    osc.start(now);
+    osc.stop(now + 0.1);
+  } else if (type === 'click' || type === 'move') {
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(400, now);
+    gainNode.gain.setValueAtTime(0.05, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+    osc.start(now);
+    osc.stop(now + 0.05);
+  } else if (type === 'error' || type === 'gameover') {
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(200, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.3);
+    gainNode.gain.setValueAtTime(0.1, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  }
+}
 
 (function() {
   'use strict';
@@ -28,6 +70,7 @@
 
   document.querySelectorAll('.game-launcher').forEach(btn => {
     btn.addEventListener('click', () => {
+      playSound('click'); // Menu click sound
       const game = btn.dataset.game;
       const fn = games[game];
       if (fn) {
@@ -105,12 +148,18 @@
       if (dir === 'DOWN') hy += BOX;
       if (hx < 0 || hx >= 400 || hy < 0 || hy >= 400 || snake.some(s => s.x === hx && s.y === hy)) {
         clearInterval(loop); loop = null; running = false;
+        playSound('gameover'); // ⚡ SOUND
         msgEl.textContent = `Game Over! Score: ${score}`;
         msgEl.className = 'game-msg error';
         return;
       }
       snake.unshift({x: hx, y: hy});
-      if (hx === food.x && hy === food.y) { score++; scoreEl.textContent = score; placeFood(); }
+      if (hx === food.x && hy === food.y) { 
+        score++; 
+        scoreEl.textContent = score; 
+        playSound('eat'); // ⚡ SOUND
+        placeFood(); 
+      }
       else snake.pop();
       draw();
     }
@@ -163,6 +212,7 @@
 
     function flip(card) {
       if (lock || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+      playSound('click'); // ⚡ SOUND
       card.classList.add('flipped');
       flipped.push(card);
       if (flipped.length === 2) {
@@ -172,6 +222,7 @@
         if (flipped[0].dataset.emoji === flipped[1].dataset.emoji) {
           flipped.forEach(c => c.classList.add('matched'));
           matched++;
+          playSound('success'); // ⚡ SOUND
           flipped = []; lock = false;
           if (matched === emojis.length) {
             msgEl.textContent = `🎉 You won in ${moves} moves!`;
@@ -223,9 +274,16 @@
     }
     function play(i) {
       if (gameOver || !playerTurn || board[i]) return;
+      playSound('click'); // ⚡ SOUND
       board[i] = 'X';
       render();
-      if (checkWin('X')) { status.textContent = 'You win!'; msgEl.textContent = '🎉 You won!'; msgEl.className = 'game-msg win'; gameOver = true; return; }
+      if (checkWin('X')) { 
+        status.textContent = 'You win!'; 
+        msgEl.textContent = '🎉 You won!'; 
+        msgEl.className = 'game-msg win'; 
+        playSound('success'); // ⚡ SOUND
+        gameOver = true; return; 
+      }
       if (board.every(c => c)) { status.textContent = 'Draw'; gameOver = true; return; }
       playerTurn = false;
       status.textContent = 'AI thinking...';
@@ -233,12 +291,17 @@
     }
     function aiMove() {
       if (gameOver) return;
-      // Simple AI: win, block, center, corner, random
       let move = findWinning('O') ?? findWinning('X') ?? (board[4] === '' ? 4 : null) ?? [0,2,6,8].find(i => !board[i]) ?? board.findIndex(c => !c);
       if (move === undefined || move === null || move === -1) { playerTurn = true; return; }
       board[move] = 'O';
       render();
-      if (checkWin('O')) { status.textContent = 'AI wins'; msgEl.textContent = '😢 AI won!'; msgEl.className = 'game-msg error'; gameOver = true; return; }
+      if (checkWin('O')) { 
+        status.textContent = 'AI wins'; 
+        msgEl.textContent = '😢 AI won!'; 
+        msgEl.className = 'game-msg error'; 
+        playSound('error'); // ⚡ SOUND
+        gameOver = true; return; 
+      }
       if (board.every(c => c)) { status.textContent = 'Draw'; gameOver = true; return; }
       playerTurn = true;
       status.textContent = 'Your turn (X)';
@@ -327,7 +390,6 @@
         const merged = merge(line);
         lines.push(merged);
       }
-      // rebuild
       const newGrid = Array(16).fill(0);
       for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -339,7 +401,13 @@
       if (grid.join(',') !== old) {
         addTile();
         render();
-        if (!canMove()) { over = true; msgEl.textContent = `Game Over! Score: ${score}`; msgEl.className = 'game-msg error'; }
+        playSound('move'); // ⚡ SOUND
+        if (!canMove()) { 
+          over = true; 
+          msgEl.textContent = `Game Over! Score: ${score}`; 
+          msgEl.className = 'game-msg error'; 
+          playSound('gameover'); // ⚡ SOUND
+        }
       }
     }
     function merge(line) {
@@ -409,6 +477,7 @@
     function flash(btn, dur = 400) {
       return new Promise(res => {
         btn.classList.add('active');
+        playSound('move'); // ⚡ SOUND
         setTimeout(() => { btn.classList.remove('active'); setTimeout(res, 150); }, dur);
       });
     }
@@ -438,6 +507,7 @@
         if (color !== sequence[userIdx]) {
           msgEl.textContent = `Wrong! You reached round ${round}.`;
           msgEl.className = 'game-msg error';
+          playSound('error'); // ⚡ SOUND
           accepting = false;
           return;
         }
@@ -446,6 +516,7 @@
           accepting = false;
           msgEl.textContent = 'Correct! Next round...';
           msgEl.className = 'game-msg win';
+          playSound('success'); // ⚡ SOUND
           await new Promise(r => setTimeout(r, 700));
           nextRound();
         }
@@ -503,10 +574,12 @@
         score++; scoreEl.textContent = score;
         msgEl.textContent = '✅ Correct!';
         msgEl.className = 'game-msg win';
+        playSound('success'); // ⚡ SOUND
         setTimeout(nextWord, 800);
       } else {
         msgEl.textContent = '❌ Try again';
         msgEl.className = 'game-msg error';
+        playSound('error'); // ⚡ SOUND
       }
     }
     submitBtn.addEventListener('click', check);
@@ -549,7 +622,6 @@
       if (op === '-' && b > a) [a, b] = [b, a];
       answer = op === '+' ? a + b : op === '-' ? a - b : a * b;
       qEl.textContent = `${a} ${op} ${b} = ?`;
-      // options
       const options = new Set([answer]);
       while (options.size < 4) {
         const delta = Math.floor(Math.random() * 20) - 10;
@@ -571,11 +643,13 @@
       if (v === answer) {
         score++; scoreEl.textContent = score;
         btn.classList.add('correct');
+        playSound('success'); // ⚡ SOUND
         setTimeout(generate, 300);
       } else {
         btn.classList.add('wrong');
         msgEl.textContent = 'Wrong!';
         msgEl.className = 'game-msg error';
+        playSound('error'); // ⚡ SOUND
       }
     }
     function start() {
@@ -594,6 +668,7 @@
           msgEl.className = 'game-msg win';
           qEl.textContent = 'Game Over';
           optsEl.innerHTML = '';
+          playSound('gameover'); // ⚡ SOUND
         }
       }, 1000);
     }
@@ -644,6 +719,7 @@
         card.textContent = n;
         rowEl.innerHTML = '';
         rowEl.appendChild(card);
+        playSound('move'); // ⚡ SOUND
         await new Promise(r => setTimeout(r, 600));
       }
       msgEl.textContent = 'Now click in order!';
@@ -657,15 +733,18 @@
       if (n === sequence[userIdx]) {
         card.classList.add('correct');
         userIdx++;
+        playSound('click'); // ⚡ SOUND
         if (userIdx === sequence.length) {
           accepting = false;
           msgEl.textContent = 'Correct! Next round...';
           msgEl.className = 'game-msg win';
+          playSound('success'); // ⚡ SOUND
           setTimeout(nextRound, 800);
         }
       } else {
         msgEl.textContent = `Wrong! You reached round ${round}.`;
         msgEl.className = 'game-msg error';
+        playSound('error'); // ⚡ SOUND
         accepting = false;
       }
     }
@@ -710,6 +789,7 @@
           box.className = 'reaction-box ready';
           box.textContent = 'CLICK NOW!';
           setState('ready');
+          playSound('move'); // ⚡ SOUND
           startTime = performance.now();
         }, delay);
       } else if (state === 'waiting') {
@@ -718,11 +798,13 @@
         box.textContent = 'Too early! Click to retry';
         msgEl.textContent = '⚠️ You clicked too early';
         msgEl.className = 'game-msg error';
+        playSound('error'); // ⚡ SOUND
         setState('idle');
       } else if (state === 'ready') {
         const t = Math.round(performance.now() - startTime);
         msgEl.textContent = `⚡ ${t} ms`;
         msgEl.className = 'game-msg win';
+        playSound('success'); // ⚡ SOUND
         if (!best || t < best) {
           best = t;
           localStorage.setItem('rxBest', best);
@@ -777,10 +859,12 @@
         score++; scoreEl.textContent = score;
         msgEl.textContent = '🔓 Cracked!';
         msgEl.className = 'game-msg win';
+        playSound('success'); // ⚡ SOUND
         setTimeout(next, 800);
       } else {
         msgEl.textContent = '❌ Wrong';
         msgEl.className = 'game-msg error';
+        playSound('error'); // ⚡ SOUND
       }
     }
     submitBtn.addEventListener('click', check);
@@ -826,10 +910,12 @@
             level++;
             msgEl.textContent = '✅ Correct!';
             msgEl.className = 'game-msg win';
+            playSound('success'); // ⚡ SOUND
             setTimeout(generate, 300);
           } else {
             msgEl.textContent = '❌ Wrong tile';
             msgEl.className = 'game-msg error';
+            playSound('error'); // ⚡ SOUND
           }
         });
         gridEl.appendChild(tile);
@@ -902,6 +988,7 @@
       const val = inputEl.value;
       if (val[idx] === text[idx]) {
         idx++;
+        playSound('click'); // ⚡ SOUND (very subtle)
         renderText();
         if (idx >= text.length) {
           clearInterval(timer);
@@ -910,9 +997,9 @@
           const wpm = Math.round((text.split(' ').length / elapsed) * 60);
           msgEl.textContent = `🎉 Done! ${wpm} WPM in ${elapsed.toFixed(1)}s`;
           msgEl.className = 'game-msg win';
+          playSound('success'); // ⚡ SOUND
         }
       } else {
-        // wrong char - remove
         inputEl.value = val.slice(0, idx);
       }
     });
@@ -943,22 +1030,22 @@
     function generate() {
       const type = Math.floor(Math.random() * 4);
       let seq = [], answer = 0;
-      if (type === 0) { // arithmetic
+      if (type === 0) {
         const start = Math.floor(Math.random() * 10) + 1;
         const step = Math.floor(Math.random() * 5) + 2;
         for (let i = 0; i < 5; i++) seq.push(start + i * step);
         answer = start + 5 * step;
-      } else if (type === 1) { // geometric
+      } else if (type === 1) {
         const start = Math.floor(Math.random() * 3) + 1;
         const mult = Math.floor(Math.random() * 2) + 2;
         let v = start;
         for (let i = 0; i < 5; i++) { seq.push(v); v *= mult; }
         answer = v;
-      } else if (type === 2) { // squares
+      } else if (type === 2) {
         const start = Math.floor(Math.random() * 3) + 1;
         for (let i = 0; i < 5; i++) seq.push((start + i) ** 2);
         answer = (start + 5) ** 2;
-      } else { // fibonacci-like
+      } else {
         let a = Math.floor(Math.random() * 3) + 1;
         let b = Math.floor(Math.random() * 3) + 1;
         seq = [a, b];
@@ -993,11 +1080,13 @@
             btn.classList.add('correct');
             msgEl.textContent = '✅ Correct!';
             msgEl.className = 'game-msg win';
+            playSound('success'); // ⚡ SOUND
             setTimeout(generate, 500);
           } else {
             btn.classList.add('wrong');
             msgEl.textContent = `❌ Wrong. Answer: ${answer}`;
             msgEl.className = 'game-msg error';
+            playSound('error'); // ⚡ SOUND
             setTimeout(generate, 1200);
           }
         });
@@ -1048,9 +1137,11 @@
         scoreEl.textContent = score;
         msgEl.textContent = '✅';
         msgEl.className = 'game-msg win';
+        playSound('success'); // ⚡ SOUND
       } else {
         msgEl.textContent = '❌ Miss';
         msgEl.className = 'game-msg error';
+        playSound('error'); // ⚡ SOUND
       }
     }
     function loopFn() {
@@ -1077,9 +1168,6 @@
         el.appendChild(inner);
         trackEl.appendChild(el);
       });
-      if (notes.some(n => n.y < -10)) {
-        // missed notes
-      }
     }
     startBtn.addEventListener('click', () => {
       if (running) return;
@@ -1116,7 +1204,6 @@
 
     function init() {
       grid = Array(SIZE * SIZE).fill(0);
-      // Start from solved (all off) and toggle random cells
       for (let k = 0; k < 6; k++) {
         const i = Math.floor(Math.random() * grid.length);
         toggle(i);
@@ -1143,6 +1230,7 @@
           toggle(i);
           moves++;
           movesEl.textContent = moves;
+          playSound('click'); // ⚡ SOUND
           render();
           checkWin();
         });
@@ -1153,6 +1241,7 @@
       if (grid.every(v => v === 0)) {
         msgEl.textContent = `🎉 Solved in ${moves} moves!`;
         msgEl.className = 'game-msg win';
+        playSound('success'); // ⚡ SOUND
       }
     }
     resetBtn.addEventListener('click', init);
